@@ -1,18 +1,39 @@
-<!DOCTYPE html><html lang="nl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Grow a Garden Hub</title>
-<style>
-body{font-family:'Comic Neue',sans-serif;background:#e0ffd4;color:#2b5128;margin:0;padding:0}
-nav{display:flex;justify-content:center;gap:2rem;background:#79c36d;padding:1rem}
-nav a{color:white;text-decoration:none;font-weight:bold;cursor:pointer}
-nav a.active{text-decoration:underline}
-.container{max-width:1000px;margin:auto;padding:2rem}
-.hidden{display:none}
-table{width:100%;border-collapse:collapse;margin-top:1rem}
-th,td{border:1px solid #7db877;padding:0.5rem;text-align:center}
-input,select{width:100%;padding:0.5rem;margin:0.25rem 0}
-button{background:#79c36d;color:white;border:none;padding:0.75rem;cursor:pointer}
-h2{border-bottom:2px solid #79c36d;padding-bottom:0.5rem}
-.timer{font-weight:bold;margin-top:1rem}
-</style></head><body>
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Grow a Garden Hub</title>
+  <style>
+    body{
+      font-family:'Comic Neue', sans-serif;
+      background:#e0ffd4;
+      color:#2b5128;
+      margin:0;padding:0;
+    }
+    header{display:flex;align-items:center;gap:1rem;padding:1rem;background:#79c36d}
+    header img{height:50px;}
+    header h1{font-size:1.8rem;color:white;margin:0;}
+    nav{display:flex;justify-content:center;gap:2rem;background:#5fa857;padding:0.7rem}
+    nav a{color:white;text-decoration:none;font-weight:bold;cursor:pointer}
+    nav a.active{text-decoration:underline;}
+    .container{max-width:1000px;margin:auto;padding:2rem}
+    .hidden{display:none}
+    table{width:100%;border-collapse:collapse;margin-top:1rem}
+    th,td{border:1px solid #7db877;padding:0.5rem;text-align:center}
+    input,select{width:100%;padding:0.5rem;margin:0.3rem 0}
+    button{background:#79c36d;color:white;border:none;padding:0.75rem;cursor:pointer}
+    h2{border-bottom:2px solid #79c36d;padding-bottom:0.5rem}
+    .timer{font-weight:bold;margin:1rem 0;}
+    .links a{color:#064;text-decoration:underline;margin-right:1rem;}
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="logo.png" alt="Grow a Garden Logo">
+  <h1>Grow a Garden Hub</h1>
+</header>
 
 <nav>
   <a onclick="show('mutations')" class="active">🌱 Mutaties</a>
@@ -22,39 +43,44 @@ h2{border-bottom:2px solid #79c36d;padding-bottom:0.5rem}
 
 <div class="container">
   <div id="mutations">
-    <h2>Mutaties (21 juli 2025)</h2>
+    <h2>Mutaties – 21 juli 2025</h2>
     <table>
-      <thead><tr><th>Mutatie</th><th>Multiplier</th><th>Bron</th></tr></thead><tbody>
-        <!-- Belangrijkste mutaties vandaag -->
-        <tr><td>Gold</td><td>x20</td><td>1% random</td></tr>
-        <tr><td>Rainbow</td><td>x50</td><td>0.1% random</td></tr>
-        <tr><td>Wet</td><td>x2</td><td>Regenweer</td></tr>
-        <tr><td>Shocked</td><td>x100</td><td>Onweer/Lightning</td></tr>
-        <tr><td>Chilled</td><td>x2</td><td>Frost Weather</td></tr>
-        <tr><td>Frozen</td><td>x10</td><td>Wet+Frost</td></tr>
-        <tr><td>Moonlit</td><td>x2</td><td>Night event</td></tr>
-        <tr><td>Bloodlit</td><td>x4</td><td>Blood Moon</td></tr>
+      <thead><tr><th>Mutatie</th><th>Multiplier</th><th>Aandeel</th></tr></thead>
+      <tbody>
+        <tr><td>Gold</td><td>x20</td><td>1%</td></tr>
+        <tr><td>Rainbow</td><td>x50</td><td>0.1%</td></tr>
+        <tr><td>Shocked</td><td>x100</td><td>Onweer</td></tr>
         <tr><td>Celestial</td><td>x120</td><td>Meteor event</td></tr>
         <tr><td>Disco</td><td>x125</td><td>Admin event</td></tr>
         <tr><td>Voidtouched</td><td>x135</td><td>Black Hole</td></tr>
-        <!-- Toevoegingen: Tranquil, Chakra, Foxfire Chakra, Radioactive, enz. -->
+        <!-- meer mutaties -->
       </tbody>
     </table>
-    <p><em>Bron: PCGamesN mutation list, incl. Tranquil/Chakra updates :contentReference[oaicite:7]{index=7}</em></p>
   </div>
 
   <div id="stock" class="hidden">
-    <h2>Live Seeds & Gear Stock</h2>
-    <div class="timer" id="timer"></div>
-    <table><thead><tr><th>Item</th><th>Aantal</th></tr></thead><tbody id="stockTable"><tr><td colspan="2">Laden…</td></tr></tbody></table>
-    <p>Realtime tracker: <a href="https://arcaiuz.com/grow-a-garden-stock" target="_blank">Arcaiuz Stock</a> :contentReference[oaicite:8]{index=8}</p>
+    <h2>Live Shop Stock</h2>
+    <div class="timer" id="timer">Volgende restock over: --:--</div>
+    <table>
+      <thead><tr><th>Item</th><th>Aantal</th></tr></thead>
+      <tbody id="stockTable"><tr><td colspan="2">Laden…</td></tr></tbody>
+    </table>
+    <div class="links">
+      <span>Externe track: </span>
+      <a href="https://arcaiuz.com/grow-a-garden-stock" target="_blank">Arcaiuz</a>
+      <a href="https://vulcanvalues.com/grow-a-garden/" target="_blank">VulcanValues</a>
+    </div>
+    <div class="links">
+      <span>Volg game op X: </span>
+      <a href="https://x.com/growagardenrblx" target="_blank">@GrowaGardenRblx</a>
+    </div>
   </div>
 
   <div id="calc" class="hidden">
     <h2>Prijs Calculator</h2>
     <form id="formCalc">
       <label>Fruitnaam:</label><input id="fruit" required>
-      <label>Mutaties (komma gescheiden):</label><input id="muts" placeholder="Rainbow, Shocked">
+      <label>Mutaties (komma ges.):</label><input id="muts" placeholder="Rainbow, Shocked">
       <label>Friend Boost (%):</label><input id="boost" type="number" value="0" min="0" max="100">
       <button type="submit">Bereken</button>
     </form>
@@ -63,20 +89,20 @@ h2{border-bottom:2px solid #79c36d;padding-bottom:0.5rem}
 </div>
 
 <script>
-// Tab-navigatie
+// Tab switch
 function show(id){
-  document.querySelectorAll('.container > div').forEach(el=>el.classList.add('hidden'));
+  document.querySelectorAll('.container > div').forEach(div=>div.classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
   document.querySelectorAll('nav a').forEach(a=>a.classList.remove('active'));
   event.target.classList.add('active');
 }
 
-// Stock + timer (5-min sync)
-const INTERVAL=300;
+// Restock timer + stock fetch
+const INTERVAL = 300;
 let nextTs;
 function updateTimer(){
-  const now=Date.now()/1000;
-  if(!nextTs||now>=nextTs){
+  const now = Date.now()/1000;
+  if (!nextTs || now >= nextTs) {
     nextTs = now - now%INTERVAL + INTERVAL;
     fetchStock();
   }
@@ -86,40 +112,38 @@ function updateTimer(){
   document.getElementById('timer').textContent = `Volgende restock over: ${m}:${s}`;
 }
 async function fetchStock(){
-  const table = document.getElementById('stockTable');
-  table.innerHTML='<tr><td colspan="2">Laden…</td></tr>';
-  // Fetch via tracker API (bv arcaiuz JSON endpoint) – hier simulatie
-  const demo=[{item:'Mythic Seed',qty:14},{item:'Rainbow Seed',qty:6},{item:'Explosive Seed',qty:22}];
-  table.innerHTML = demo.map(i=>`<tr><td>${i.item}</td><td>${i.qty}</td></tr>`).join('');
+  const tb = document.getElementById('stockTable');
+  tb.innerHTML = '<tr><td colspan="2">Laden…</td></tr>';
+  try {
+    const res = await fetch('https://vulcanvalues.com/grow-a-garden/stock?format=json');
+    const data = await res.json();
+    tb.innerHTML = data.seeds.map(x=>`<tr><td>${x.name}</td><td>${x.qty}</td></tr>`).join('');
+  } catch {
+    tb.innerHTML = '<tr><td colspan="2">Fout ophalen.</td></tr>';
+  }
 }
-setInterval(updateTimer,1000);
+setInterval(updateTimer, 1000);
 updateTimer();
 
-// Calculator
+// Calculator logic
 document.getElementById('formCalc').addEventListener('submit', e=>{
   e.preventDefault();
-  const base=100;
-  let bonus=0;
-  const muts = document.getElementById('muts').value.split(',').map(x=>x.trim().toLowerCase());
+  const base = 100;
+  let bonus = 0;
+  const muts = document.getElementById('muts').value.split(',').map(s=>s.trim().toLowerCase());
   muts.forEach(m=>{
-    switch(m){
-      case 'rainbow': bonus+=50; break;
-      case 'gold': bonus+=20; break;
-      case 'shocked': bonus+=100; break;
-      case 'celestial': bonus+=120; break;
-      case 'disco': bonus+=125; break;
-      case 'voidtouched': bonus+=135; break;
-      default: bonus+=30;
-    }
+    const map = {rainbow:50, gold:20, shocked:100, celestial:120, disco:125, voidtouched:135};
+    bonus += map[m] || 30;
   });
-  const boost=parseFloat(document.getElementById('boost').value);
+  const boost = parseFloat(document.getElementById('boost').value) || 0;
   const total = base + bonus;
-  const final = Math.round(total*(1+boost/100));
+  const final = Math.round(total * (1 + boost/100));
   document.getElementById('resCalc').innerHTML = `
-    <p>Basis: ${base} + bonus: ${bonus}</p>
+    <p>Basis: ${base} + Mutatie bonus: ${bonus}</p>
     <p>Friend boost: +${Math.round(final-total)}</p>
     <h3>Totaal: ${final} 🌸</h3>`;
 });
 </script>
 
-</body></html>
+</body>
+</html>
