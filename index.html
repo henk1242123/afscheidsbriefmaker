@@ -3,388 +3,348 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Grow a Garden Hub - 21 juli 2025</title>
+<title>Grow a Garden Fruit & Mutaties Calculator</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
   body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #daf5c8;
-    color: #26582b;
-    margin: 0; padding: 0;
+    margin: 0; background: #E8F0F2;
+    font-family: 'Nunito', sans-serif;
+    color: #333;
   }
   header {
-    background-color: #63a34a;
-    padding: 1rem 2rem;
+    background: #6EC1E4;
+    padding: 10px 20px;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   }
-  header img#game-logo {
+  header img.logo {
     height: 50px;
-    user-select: none;
+  }
+  header h1 {
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: white;
+    margin: 0;
   }
   nav {
-    background: #4f8b34;
+    background: #3AA0E6;
     display: flex;
     justify-content: center;
-    gap: 2rem;
-    padding: 1rem 0;
   }
-  nav a {
+  nav button {
+    background: transparent;
+    border: none;
     color: white;
     font-weight: 700;
     font-size: 1.1rem;
+    padding: 15px 25px;
     cursor: pointer;
-    text-decoration: none;
-    user-select: none;
-    transition: opacity 0.2s;
+    transition: background 0.3s ease;
   }
-  nav a:hover, nav a.active {
-    text-decoration: underline;
-    opacity: 0.9;
+  nav button:hover,
+  nav button.active {
+    background: #2679BD;
   }
   main {
-    max-width: 1100px;
-    margin: auto;
-    padding: 2rem;
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
   }
-  .hidden {
-    display: none;
-  }
-
-  h1, h2, h3 {
-    font-weight: 700;
-    margin-bottom: 0.6rem;
-  }
-
-  /* Stock Table */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-    background: white;
-    box-shadow: 0 0 8px rgba(0,0,0,0.07);
-    border-radius: 6px;
-    overflow: hidden;
-  }
-  table th, table td {
-    border-bottom: 1px solid #c0d7a8;
-    padding: 0.7rem 1rem;
-    text-align: center;
-    vertical-align: middle;
-  }
-  table th {
-    background-color: #7cc044;
+  #loadingScreen {
+    position: fixed;
+    inset: 0;
+    background: #6EC1E4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: white;
-    font-weight: 700;
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    z-index: 9999;
+    user-select: none;
+    flex-direction: column;
   }
-  table tr:last-child td {
-    border-bottom: none;
+  #loadingScreen .grow-text {
+    margin-top: 15px;
+    font-size: 1.2rem;
+    animation: pulse 1.5s infinite;
   }
-  .timer {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin: 0.8rem 0 1rem;
-    color: #416421;
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
   }
-
-  /* Calculator styles */
-  form {
-    max-width: 450px;
-    background: white;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 0 10px #a5d06c;
+  .form-group {
+    margin-bottom: 15px;
   }
   label {
+    font-weight: 700;
     display: block;
-    margin: 0.8rem 0 0.3rem;
-    font-weight: 600;
+    margin-bottom: 6px;
   }
-  input[type="text"], input[type="number"] {
+  select, input[type=number] {
     width: 100%;
-    padding: 0.4rem 0.6rem;
-    border: 2px solid #a1ce71;
-    border-radius: 4px;
+    padding: 8px 10px;
+    border: 2px solid #6EC1E4;
+    border-radius: 6px;
     font-size: 1rem;
   }
-  button {
-    margin-top: 1rem;
-    padding: 0.6rem 1rem;
-    background: #63a34a;
-    border: none;
-    border-radius: 6px;
+  button.calculate-btn {
+    background: #3AA0E6;
     color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    cursor: pointer;
     font-weight: 700;
     font-size: 1.1rem;
-    cursor: pointer;
-    transition: background 0.3s;
+    margin-top: 10px;
+    transition: background 0.3s ease;
   }
-  button:hover {
-    background: #52853a;
+  button.calculate-btn:hover {
+    background: #2679BD;
   }
-
-  #calcResult {
-    margin-top: 1.5rem;
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: #3b6b1f;
+  #result {
+    margin-top: 20px;
+    background: white;
+    border-radius: 8px;
+    padding: 15px 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    font-size: 1.2rem;
   }
-
-  /* Fruit images in stock */
-  .stock-img {
-    height: 48px;
-    width: 48px;
-    object-fit: contain;
-    border-radius: 6px;
-    margin-right: 10px;
+  .mutations-list {
+    list-style: none;
+    padding: 0;
   }
-  .stock-item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .mutations-list li {
+    background: white;
+    margin-bottom: 12px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
   }
-
-  /* Info lists */
-  ul {
-    list-style-type: disc;
-    margin-left: 1.5rem;
+  .mutations-list strong {
+    color: #3AA0E6;
+  }
+  @media (max-width: 600px) {
+    nav button {
+      padding: 10px 15px;
+      font-size: 1rem;
+    }
   }
 </style>
 </head>
 <body>
+
+<div id="loadingScreen">
+  <img src="https://i.imgur.com/KcGv4F2.png" alt="Grow a Garden Logo" style="width: 120px; height: auto;">
+  <div class="grow-text">LOADING...</div>
+</div>
+
 <header>
-  <img id="game-logo" src="game_logo.png" alt="Grow a Garden Logo" />
-  <h1>Grow a Garden Hub - 21 Juli 2025</h1>
+  <img src="https://i.imgur.com/KcGv4F2.png" alt="Grow a Garden Logo" class="logo" />
+  <h1>Grow a Garden Calculator</h1>
 </header>
+
 <nav>
-  <a class="active" href="#" onclick="showPage('calculator')">Calculator</a>
-  <a href="#" onclick="showPage('stock')">Shop Stock</a>
-  <a href="#" onclick="showPage('info')">Info</a>
+  <button class="active" data-page="calculator">Fruit Waarde</button>
+  <button data-page="mutations">Mutaties Uitleg</button>
+  <button data-page="info">Informatie</button>
 </nav>
+
 <main>
-  <!-- Calculator page -->
-  <section id="calculator">
-    <h2>Fruit Waarde Calculator</h2>
-    <form id="calcForm">
-      <label for="fruitInput">Voer je fruit in (komma-gescheiden):</label>
-      <input type="text" id="fruitInput" placeholder="Apple, Dragon Fruit, Banana" required />
-
-      <label for="mutationInput">Mutaties (komma-gescheiden):</label>
-      <input type="text" id="mutationInput" placeholder="Rainbow, Shocked, Glowing" />
-
-      <label for="friendBoostInput">Friend Boost (%)</label>
-      <input type="number" id="friendBoostInput" min="0" max="100" value="0" />
-
-      <button type="submit">Bereken waarde</button>
-    </form>
-    <div id="calcResult"></div>
+  <section id="calculator" class="page active">
+    <h2>Bereken de waarde van je fruit</h2>
+    <div class="form-group">
+      <label for="fruitSelect">Selecteer fruit</label>
+      <select id="fruitSelect" aria-label="Fruit select">
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="mutationsSelect">Selecteer mutaties (houd Ctrl / Cmd ingedrukt voor meerdere)</label>
+      <select id="mutationsSelect" multiple size="8" aria-label="Mutaties select">
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="friendBoost">Vriend Boost (%)</label>
+      <input type="number" id="friendBoost" min="0" max="200" value="0" aria-label="Vriend boost percentage" />
+    </div>
+    <button class="calculate-btn" id="calculateBtn">Bereken waarde</button>
+    <div id="result" aria-live="polite" role="region"></div>
   </section>
 
-  <!-- Stock page -->
-  <section id="stock" class="hidden">
-    <h2>Shop Stock & Restock Timer</h2>
-    <div class="timer" id="restockTimer">Volgende restock over: --:--</div>
-    <table>
-      <thead>
-        <tr>
-          <th>Item</th>
-          <th>Type</th>
-          <th>Aantal</th>
-          <th>Prijs (🌸)</th>
-        </tr>
-      </thead>
-      <tbody id="stockBody">
-        <tr><td colspan="4">Laden…</td></tr>
-      </tbody>
-    </table>
+  <section id="mutations" class="page" style="display:none;">
+    <h2>Mutaties uitleg</h2>
+    <ul class="mutations-list" id="mutationsList">
+    </ul>
   </section>
 
-  <!-- Info page -->
-  <section id="info" class="hidden">
-    <h2>Fruitsoorten</h2>
-    <ul id="fruitList"></ul>
-
-    <h2>Mutaties</h2>
-    <table>
-      <thead><tr><th>Mutatie</th><th>Kans / Effect</th></tr></thead>
-      <tbody id="mutationList"></tbody>
-    </table>
+  <section id="info" class="page" style="display:none;">
+    <h2>Informatie over Grow a Garden</h2>
+    <p>Grow a Garden is een Roblox spel waar je fruit kweekt, mutaties ontdekt, en je opbrengsten kunt verkopen. Gebruik deze calculator om de waarde van je fruit te bepalen op basis van de mutaties en vriend boost.</p>
+    <p>Alle prijzen en mutaties zijn gebaseerd op de meest recente data van juli 2025.</p>
   </section>
 </main>
 
-<script>
-  // Navigatie tussen pagina's
-  function showPage(id) {
-    document.querySelectorAll('main section').forEach(s => s.classList.add('hidden'));
-    document.getElementById(id).classList.remove('hidden');
-    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-    event.target.classList.add('active');
+<script type="module">
+// ================== fruit.js ==================
+export const fruitData = [
+  { name: "Apple", value: 248 },
+  { name: "Avocado", value: 316 },
+  { name: "Banana", value: 1579 },
+  { name: "Blood Banana", value: 5415 },
+  { name: "Blueberry", value: 18 },
+  { name: "Cacao", value: 10830 },
+  { name: "Candy Blossom", value: 90250 },
+  { name: "Cantaloupe", value: 48634 },
+  { name: "Celestiberry", value: 9025 },
+  { name: "Cherry Blossom", value: 451 },
+  { name: "Coconut", value: 361 },
+  { name: "Cranberry", value: 1805 },
+  { name: "Dragon Fruit", value: 4287 },
+  { name: "Durian", value: 4513 },
+  { name: "Eggplant", value: 6769 },
+  { name: "Feijoa", value: 11733 },
+  { name: "Grape", value: 7085 },
+  { name: "Kiwi", value: 2482 },
+  { name: "Lemon", value: 316 },
+  { name: "Loquat", value: 7220 },
+  { name: "Mango", value: 5866 },
+  { name: "Moon Mango", value: 45125 },
+  { name: "Moon Melon", value: 16245 },
+  { name: "Moonflower", value: 8574 },
+  { name: "Moon Blossom", value: 50138 },
+  { name: "Mushroom", value: 136278 },
+  { name: "Nectarine", value: 31588 },
+  { name: "Orange Tulip", value: 767 },
+  { name: "Papaya", value: 1000 },
+  { name: "Passionfruit", value: 3204 },
+  { name: "Peach", value: 271 },
+  { name: "Pear", value: 500 },
+  { name: "Pineapple", value: 1805 },
+  { name: "Prickly Pear", value: 6318 },
+  { name: "Raspberry", value: 90 },
+  { name: "Soul Fruit", value: 3000 },
+  { name: "Starfruit", value: 13538 },
+  { name: "Strawberry", value: 14 },
+  { name: "Sugar Apple", value: 43320 },
+  { name: "Tomato", value: 27 },
+  { name: "Watermelon", value: 2708 },
+];
+
+// ================== mutations.js ==================
+export const mutationData = [
+  { name: "Wet", multiplier: 1.10, description: "Verhoogt waarde met 10%" },
+  { name: "Shocked", multiplier: 1.15, description: "Verhoogt waarde met 15%" },
+  { name: "Chilled", multiplier: 1.10, description: "Verhoogt waarde met 10%" },
+  { name: "Frozen", multiplier: 1.20, description: "Verhoogt waarde met 20%" },
+  { name: "Chocolated", multiplier: 1.25, description: "Verhoogt waarde met 25%" },
+  { name: "Twisted", multiplier: 1.30, description: "Verhoogt waarde met 30%" },
+  { name: "Burned", multiplier: 1.20, description: "Verhoogt waarde met 20%" },
+  { name: "Diseased", multiplier: 0.90, description: "Vermindert waarde met 10%" },
+  { name: "Rotted", multiplier: 0.75, description: "Vermindert waarde met 25%" },
+  { name: "Glow", multiplier: 1.15, description: "Verhoogt waarde met 15%" },
+  { name: "Golden", multiplier: 1.50, description: "Verhoogt waarde met 50%" },
+  { name: "Plague", multiplier: 0.50, description: "Vermindert waarde met 50%" },
+  { name: "Poisoned", multiplier: 0.85, description: "Vermindert waarde met 15%" },
+  { name: "Radiated", multiplier: 1.35, description: "Verhoogt waarde met 35%" },
+];
+
+// ================== main script ==================
+import { fruitData } from './fruit.js';
+import { mutationData } from './mutations.js';
+
+// Omdat we inline alles doen (geen echte files), simuleren we het hier:
+const fruits = fruitData;
+const mutations = mutationData;
+
+const fruitSelect = document.getElementById('fruitSelect');
+const mutationsSelect = document.getElementById('mutationsSelect');
+const friendBoostInput = document.getElementById('friendBoost');
+const calculateBtn = document.getElementById('calculateBtn');
+const resultDiv = document.getElementById('result');
+const mutationsList = document.getElementById('mutationsList');
+const navButtons = document.querySelectorAll('nav button');
+const pages = document.querySelectorAll('main section.page');
+
+function switchPage(page) {
+  pages.forEach(p => {
+    p.style.display = p.id === page ? 'block' : 'none';
+  });
+  navButtons.forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.page === page);
+  });
+}
+
+navButtons.forEach(btn => {
+  btn.addEventListener('click', () => switchPage(btn.dataset.page));
+});
+
+function loadFruitOptions() {
+  fruits.forEach(fruit => {
+    const opt = document.createElement('option');
+    opt.value = fruit.name;
+    opt.textContent = fruit.name;
+    fruitSelect.appendChild(opt);
+  });
+}
+
+function loadMutationOptions() {
+  mutations.forEach(mut => {
+    const opt = document.createElement('option');
+    opt.value = mut.name;
+    opt.textContent = `${mut.name} (${(mut.multiplier * 100 - 100).toFixed(0)}%)`;
+    mutationsSelect.appendChild(opt);
+  });
+}
+
+function loadMutationsInfo() {
+  mutations.forEach(mut => {
+    const li = document.createElement('li');
+    li.innerHTML = `<strong>${mut.name}</strong>: ${mut.description}`;
+    mutationsList.appendChild(li);
+  });
+}
+
+function calculateValue() {
+  const fruitName = fruitSelect.value;
+  const fruit = fruits.find(f => f.name === fruitName);
+  if (!fruit) {
+    resultDiv.textContent = "Selecteer een fruit.";
+    return;
   }
 
-  // ALLE fruitsoorten van Grow a Garden per 21 juli 2025
-  const allFruits = [
-    { name: "Apple", basePrice: 266 },
-    { name: "Banana", basePrice: 1579 },
-    { name: "Blackberry", basePrice: 3540 },
-    { name: "Blueberry", basePrice: 4730 },
-    { name: "Coconut", basePrice: 1605 },
-    { name: "Dragon Fruit", basePrice: 4566 },
-    { name: "Grapes", basePrice: 2445 },
-    { name: "Kiwi", basePrice: 1800 },
-    { name: "Lemon", basePrice: 1985 },
-    { name: "Mango", basePrice: 5050 },
-    { name: "Orange", basePrice: 2100 },
-    { name: "Papaya", basePrice: 4000 },
-    { name: "Peach", basePrice: 4200 },
-    { name: "Pear", basePrice: 3200 },
-    { name: "Pineapple", basePrice: 5300 },
-    { name: "Plum", basePrice: 2800 },
-    { name: "Raspberry", basePrice: 4500 },
-    { name: "Strawberry", basePrice: 3500 },
-    { name: "Watermelon", basePrice: 6000 },
-  ];
-
-  // Alle mutaties bekend in de game op 21 juli 2025
-  const allMutations = [
-    { name: "Rainbow", effect: "Verhoogt prijs met +50 🌸" },
-    { name: "Shocked", effect: "Verhoogt prijs met +100 🌸" },
-    { name: "Glowing", effect: "Verhoogt prijs met +40 🌸" },
-    { name: "Poisoned", effect: "Verhoogt prijs met +30 🌸" },
-    { name: "Doomed", effect: "Verhoogt prijs met +60 🌸" },
-    { name: "Toxic", effect: "Verhoogt prijs met +25 🌸" },
-    { name: "Frosted", effect: "Verhoogt prijs met +20 🌸" },
-    { name: "Wild", effect: "Verhoogt prijs met +35 🌸" }
-  ];
-
-  // Stock van fruit, seeds en gear (voorbeeldwaarden - pas zelf aan)
-  let stockData = [
-    // Fruit
-    { name: "Apple", type: "Fruit", qty: 15, price: 266 },
-    { name: "Banana", type: "Fruit", qty: 8, price: 1579 },
-    { name: "Dragon Fruit", type: "Fruit", qty: 5, price: 4566 },
-    { name: "Watermelon", type: "Fruit", qty: 2, price: 6000 },
-
-    // Seeds
-    { name: "Mythic Seed", type: "Seed", qty: 10, price: 12000 },
-    { name: "Legendary Seed", type: "Seed", qty: 7, price: 15000 },
-
-    // Gear
-    { name: "Flame Sword", type: "Gear", qty: 3, price: 15500 },
-    { name: "Golden Scythe", type: "Gear", qty: 1, price: 25000 },
-  ];
-
-  // Restock timer (5 minuten = 300 seconden)
-  const RESTOCK_INTERVAL = 300;
-  let nextRestockTimestamp;
-
-  function updateRestockTimer() {
-    const now = Date.now() / 1000;
-    if (!nextRestockTimestamp || now >= nextRestockTimestamp) {
-      nextRestockTimestamp = now - (now % RESTOCK_INTERVAL) + RESTOCK_INTERVAL;
-      // In echte setup kun je hier stockData opnieuw laden via API of JSON update
-      // Voor nu gebruik ik dummy stockData die statisch is
-      renderStockTable();
-    }
-    const timeLeft = Math.max(0, nextRestockTimestamp - now);
-    const min = String(Math.floor(timeLeft / 60)).padStart(2, '0');
-    const sec = String(Math.floor(timeLeft % 60)).padStart(2, '0');
-    document.getElementById('restockTimer').textContent = `Volgende restock over: ${min}:${sec}`;
-  }
-
-  // Render stock tabel
-  function renderStockTable() {
-    const tbody = document.getElementById('stockBody');
-    tbody.innerHTML = '';
-    stockData.forEach(item => {
-      tbody.innerHTML += `
-        <tr>
-          <td class="stock-item">
-            <img class="stock-img" src="images/${item.name.replace(/\s+/g, '')}.png" alt="${item.name}" />
-            ${item.name}
-          </td>
-          <td>${item.type}</td>
-          <td>${item.qty}</td>
-          <td>${item.price}</td>
-        </tr>`;
-    });
-  }
-
-  // Render fruit en mutaties info
-  function renderInfo() {
-    const fruitList = document.getElementById('fruitList');
-    const mutList = document.getElementById('mutationList');
-    fruitList.innerHTML = '';
-    mutList.innerHTML = '';
-
-    allFruits.forEach(fruit => {
-      const li = document.createElement('li');
-      li.textContent = `${fruit.name} (Basis prijs: ${fruit.basePrice} 🌸)`;
-      fruitList.appendChild(li);
-    });
-
-    allMutations.forEach(mut => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `<td>${mut.name}</td><td>${mut.effect}</td>`;
-      mutList.appendChild(tr);
-    });
-  }
-
-  // Calculator logica
-  document.getElementById('calcForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const fruitInput = document.getElementById('fruitInput').value.trim();
-    const mutationInput = document.getElementById('mutationInput').value.trim();
-    const friendBoostInput = Number(document.getElementById('friendBoostInput').value) || 0;
-
-    if (!fruitInput) {
-      alert("Voer tenminste één fruitsoort in.");
-      return;
-    }
-
-    // Haal fruit en mutaties op
-    const fruits = fruitInput.split(',').map(f => f.trim().toLowerCase());
-    const mutations = mutationInput ? mutationInput.split(',').map(m => m.trim().toLowerCase()) : [];
-
-    // Vind fruit objecten & basisprijs
-    let totalBasePrice = 0;
-    let fruitNotFound = [];
-    fruits.forEach(fruitName => {
-      const fruitObj = allFruits.find(f => f.name.toLowerCase() === fruitName);
-      if (fruitObj) totalBasePrice += fruitObj.basePrice;
-      else fruitNotFound.push(fruitName);
-    });
-
-    if (fruitNotFound.length > 0) {
-      alert(`Fruit niet gevonden: ${fruitNotFound.join(', ')}`);
-      return;
-    }
-
-    // Mutaties toevoegen
-    let mutationBonus = 0;
-    mutations.forEach(mName => {
-      const mutObj = allMutations.find(m => m.name.toLowerCase() === mName);
-      if (mutObj) {
-        // Bonus aantal bloemen extraheren uit string (e.g. +50 🌸)
-        const match = mutObj.effect.match(/\+(\d+)\s*🌸/);
-        if (match) mutationBonus += Number(match[1]);
-      }
-    });
-
-    let basePlusMut = totalBasePrice + mutationBonus;
-
-    // Friend boost toepassen
-    const finalPrice = Math.round(basePlusMut * (1 + friendBoostInput / 100));
-
-    document.getElementById('calcResult').textContent =
-      `Totale waarde: ${finalPrice.toLocaleString()} 🌸`;
+  const selectedMutations = [...mutationsSelect.selectedOptions].map(opt => opt.value);
+  let multiplier = 1;
+  selectedMutations.forEach(mName => {
+    const mut = mutations.find(m => m.name === mName);
+    if (mut) multiplier *= mut.multiplier;
   });
 
-  // Initialisatie
-  renderInfo();
-  renderStockTable();
-  updateRestockTimer();
-  setInterval(updateRestockTimer, 1000);
+  let friendBoost = parseFloat(friendBoostInput.value);
+  if (isNaN(friendBoost) || friendBoost < 0) friendBoost = 0;
+  if (friendBoost > 200) friendBoost = 200;
 
+  multiplier *= (1 + friendBoost / 100);
+
+  const totalValue = Math.round(fruit.value * multiplier);
+
+  resultDiv.textContent = `De geschatte waarde van je ${fruitName} is: ${totalValue.toLocaleString()} Coins.`;
+}
+
+calculateBtn.addEventListener('click', calculateValue);
+
+window.addEventListener('load', () => {
+  loadFruitOptions();
+  loadMutationOptions();
+  loadMutationsInfo();
+  setTimeout(() => {
+    document.getElementById('loadingScreen').style.display = 'none';
+  }, 1500);
+});
 </script>
+
 </body>
 </html>
